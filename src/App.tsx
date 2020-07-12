@@ -1,5 +1,10 @@
 import React from "react";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import Button, { ButtonType, ButtonSize } from "./components/Button/button";
+import Icon from "./components/Icon/icon";
+
+library.add(fas);
 
 function App() {
   return (
@@ -41,6 +46,7 @@ function App() {
       >
         hello,link disabled
       </Button>
+      <Icon icon="coffee" theme="danger" />
     </div>
   );
 }
