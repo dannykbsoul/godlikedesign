@@ -1,0 +1,78 @@
+.btn {
+    position: relative;
+    display: inline-block;
+    font-weight: $btn-font-weight;
+    line-height: $btn-line-height;
+    color: $body-color;
+    //文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止
+    white-space: nowrap;
+    //上下左右居中
+    text-align: center;
+    vertical-align: middle;
+    background-image: none;
+    border: $btn-border-width solid transparent;
+    @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $border-radius);
+    box-shadow: $btn-box-shadow;
+    cursor: pointer;
+    transition: $btn-transition;
+
+    //&属于sass语法，代表上一级选择器
+    //如果是链接的话，此时disabled是className，如果是button的话，此时disabled是属性，[]是属性选择器，IE6不支持
+    &.disabled,
+    &[disabled] {
+        //是一个红色的圈加一个斜杠，表示禁止的意思
+        //cursor:no-drop       //是一个红色的圈加一个斜杠，表示禁止的意思
+        cursor: not-allowed;
+        opacity: $btn-disabled-opacity;
+        box-shadow: none;
+
+        //让disabled的所有子元素不接受鼠标事件
+        >* {
+            pointer-events: none;
+        }
+    }
+}
+
+.btn-lg {
+    @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
+}
+
+.btn-sm {
+    @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
+}
+
+.btn-primary {
+    @include button-style($primary, $primary, $white)
+}
+
+.btn-danger {
+    @include button-style($danger, $danger, $white)
+}
+
+.btn-default {
+    @include button-style($white, $gray-400, $body-color, $white, $primary, $primary)
+}
+
+.btn-link {
+    font-weight: $font-weight-normal;
+    color: $btn-link-color;
+    text-decoration: $link-decoration;
+    box-shadow: none;
+
+    &:hover {
+        color: $btn-link-hover-color;
+        text-decoration: $link-hover-decoration;
+    }
+
+    &:focus,
+    &.focus {
+        text-decoration: $link-hover-decoration;
+        box-shadow: none;
+    }
+
+    &:disabled,
+    &.disabled {
+        color: $btn-link-disabled-color;
+        pointer-events: none;
+    }
+}
