@@ -4,6 +4,8 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import Button, { ButtonType, ButtonSize } from "./components/Button/button";
 import Icon from "./components/Icon/icon";
 import Alert from "./components/Alert/alert";
+import Menu from "./components/Menu/menu";
+import MenuItem from "./components/Menu/menuItem";
 
 library.add(fas);
 
@@ -47,6 +49,11 @@ function App() {
       />
       <Alert title="alert title3" type="danger" />
       <Alert title="alert title4" type="warning" />
+      <Menu defaultIndex={0} mode="vertical">
+        <MenuItem index={1}>1</MenuItem>
+        <MenuItem index={2}>2</MenuItem>
+        <MenuItem index={3}>3</MenuItem>
+      </Menu>
     </div>
   );
 }
