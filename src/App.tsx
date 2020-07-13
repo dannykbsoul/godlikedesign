@@ -3,6 +3,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import Button, { ButtonType, ButtonSize } from "./components/Button/button";
 import Icon from "./components/Icon/icon";
+import Alert from "./components/Alert/alert";
 
 library.add(fas);
 
@@ -13,8 +14,8 @@ function App() {
       <h2>2</h2>
       <h3>3</h3>
       <Button
-        btnType={ButtonType.Primary}
-        size={ButtonSize.Large}
+        btnType="primary"
+        size="lg"
         onClick={(e) => {
           console.log(e.target);
         }}
@@ -22,31 +23,30 @@ function App() {
       >
         hello,button
       </Button>
-      <Button btnType={ButtonType.Danger} size={ButtonSize.Small}>
+      <Button btnType="danger" size="sm">
         hello,danger
       </Button>
-      <Button btnType={ButtonType.Default} size={ButtonSize.Large} disabled>
+      <Button btnType="default" size="lg" disabled>
         hello,button disabled
       </Button>
-      <Button btnType={ButtonType.Default} size={ButtonSize.Large}>
+      <Button btnType="default" size="lg">
         hello,button
       </Button>
-      <Button
-        btnType={ButtonType.Link}
-        size={ButtonSize.Small}
-        href="http://google.com"
-      >
+      <Button btnType="link" size="sm" href="http://google.com">
         hello,link
       </Button>
-      <Button
-        btnType={ButtonType.Link}
-        size={ButtonSize.Large}
-        disabled
-        href="http://google.com"
-      >
+      <Button btnType="link" size="lg" disabled href="http://google.com">
         hello,link disabled
       </Button>
       <Icon icon="coffee" theme="danger" />
+      <Alert title="alert title1" type="success" />
+      <Alert
+        title="alert title2"
+        description="alert title2 content"
+        type="default"
+      />
+      <Alert title="alert title3" type="danger" />
+      <Alert title="alert title4" type="warning" />
     </div>
   );
 }

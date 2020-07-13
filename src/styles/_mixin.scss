@@ -33,8 +33,14 @@
     &.disabled {
         color: $color;
         background: $background;
-        border-color: $border;
+        border-color: $border
     }
+}
+
+@mixin alert-style($background, $border, $color) {
+    color: $color;
+    background: $background;
+    border-color: $border;
 }
 
 @mixin zoom-animation($direction: 'top',
