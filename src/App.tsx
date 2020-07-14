@@ -7,13 +7,15 @@ import Alert from "./components/Alert/alert";
 import Menu from "./components/Menu/menu";
 import MenuItem from "./components/Menu/menuItem";
 import SubMenu from "./components/Menu/subMenu";
+import Tabs from "./components/Tabs/tabs";
+import TabItem from "./components/Tabs/tabItem";
 
 library.add(fas);
 
 function App() {
   return (
     <div>
-      <h1>1</h1>
+      {/* <h1>1</h1>
       <h2>2</h2>
       <h3>3</h3>
       <Button
@@ -49,9 +51,9 @@ function App() {
         type="default"
       />
       <Alert title="alert title3" type="danger" />
-      <Alert title="alert title4" type="warning" />
+      <Alert title="alert title4" type="warning" /> */}
       <Menu
-        mode="vertical"
+        mode="horizontal"
         onSelect={(index) => {
           alert(index);
         }}
@@ -63,9 +65,18 @@ function App() {
         <SubMenu title="dropdown">
           <MenuItem>4</MenuItem>
           <MenuItem>5</MenuItem>
-          <MenuItem>6</MenuItem>
+          <MenuItem>
+            <Button>123</Button>
+          </MenuItem>
         </SubMenu>
       </Menu>
+      <Tabs>
+        <TabItem label="card1">card one</TabItem>
+        <TabItem label="card2">card two</TabItem>
+        <TabItem label="disabled" disabled>
+          card three
+        </TabItem>
+      </Tabs>
     </div>
   );
 }
