@@ -9,6 +9,7 @@ import MenuItem from "./components/Menu/menuItem";
 import SubMenu from "./components/Menu/subMenu";
 import Tabs from "./components/Tabs/tabs";
 import TabItem from "./components/Tabs/tabItem";
+import Input from "./components/Input";
 
 library.add(fas);
 
@@ -77,6 +78,13 @@ function App() {
           card three
         </TabItem>
       </Tabs>
+      <input type="text" />
+      <Input
+        onChange={(e) => {
+          console.log(e);
+        }}
+        onClick={(e) => console.log(e)}
+      />
     </div>
   );
 }
