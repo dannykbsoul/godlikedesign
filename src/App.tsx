@@ -6,6 +6,7 @@ import Icon from "./components/Icon/icon";
 import Alert from "./components/Alert/alert";
 import Menu from "./components/Menu/menu";
 import MenuItem from "./components/Menu/menuItem";
+import SubMenu from "./components/Menu/subMenu";
 
 library.add(fas);
 
@@ -49,10 +50,21 @@ function App() {
       />
       <Alert title="alert title3" type="danger" />
       <Alert title="alert title4" type="warning" />
-      <Menu defaultIndex={0} mode="vertical">
-        <MenuItem index={1}>1</MenuItem>
-        <MenuItem index={2}>2</MenuItem>
-        <MenuItem index={3}>3</MenuItem>
+      <Menu
+        mode="vertical"
+        onSelect={(index) => {
+          alert(index);
+        }}
+        defaultOpenSubMenus={["3"]}
+      >
+        <MenuItem>1</MenuItem>
+        <MenuItem>2</MenuItem>
+        <MenuItem>3</MenuItem>
+        <SubMenu title="dropdown">
+          <MenuItem>4</MenuItem>
+          <MenuItem>5</MenuItem>
+          <MenuItem>6</MenuItem>
+        </SubMenu>
       </Menu>
     </div>
   );
