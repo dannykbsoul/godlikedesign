@@ -11,8 +11,11 @@ export type ButtonType = "primary" | "default" | "danger" | "link";
 //按钮的基础属性接口
 interface BaseButtonProps {
   className?: string;
+  /**设置button的禁用 */
   disabled?: boolean;
+  /**设置 Button 的尺寸 */
   size?: ButtonSize;
+  /**设置 Button 的类型 */
   btnType?: ButtonType;
   href?: string;
 }
@@ -28,7 +31,15 @@ type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>;
 //此时我们要用到Partial<T>，将所有属性变为可选属性
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
 
-const Button: FC<ButtonProps> = (props) => {
+/**
+ * 页面中最常用的的按钮元素，适合于完成特定的交互，支持 HTML button 和 a 链接 的所有属性
+ * ### 引用方法
+ *
+ * ~~~js
+ * import { Button } from 'godlikedesign'
+ * ~~~
+ */
+export const Button: FC<ButtonProps> = (props) => {
   const {
     className,
     disabled,

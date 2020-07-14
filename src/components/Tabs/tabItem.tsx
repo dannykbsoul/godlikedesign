@@ -7,7 +7,7 @@ export interface TabItemProps {
   disabled?: boolean;
 }
 
-const TabItem: FC<TabItemProps> = ({ children }) => {
+export const TabItem: FC<TabItemProps> = ({ children }) => {
   return <div className="godlike-tab-panel">{children}</div>;
 };
 

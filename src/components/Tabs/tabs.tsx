@@ -18,7 +18,7 @@ export interface TabsProps {
   type?: "line" | "card";
 }
 
-const Tabs: FC<TabsProps> = (props) => {
+export const Tabs: FC<TabsProps> = (props) => {
   const { defaultIndex, className, onSelect, type, children } = props;
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const handleClick = (index: number, disabled: boolean | undefined) => {

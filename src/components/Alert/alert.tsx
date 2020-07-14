@@ -17,7 +17,7 @@ export interface AlertProps {
   closable?: boolean;
 }
 
-const Alert: FC<AlertProps> = (props) => {
+export const Alert: FC<AlertProps> = (props) => {
   const [hide, setHide] = useState(false);
   const { title, description, type, onClose, closable } = props;
   const classes = classNames("godlike-alert", {
