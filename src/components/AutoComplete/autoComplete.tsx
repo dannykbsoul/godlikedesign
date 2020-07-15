@@ -29,7 +29,7 @@ export interface AutoCompleteProps extends Omit<InputProps, "onSelect"> {
     str: string
   ) => DataSourceObject[] | Promise<DataSourceType[]>;
   /** 点击选中建议项时触发的回调 */
-  onSelect?: (item: string) => void;
+  onSelect?: (item: DataSourceObject) => void;
   /** 支持自定义渲染下拉项，返回ReactElement */
   renderOption?: (item: DataSourceType) => ReactElement;
 }
