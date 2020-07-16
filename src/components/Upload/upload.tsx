@@ -1,11 +1,9 @@
-import React, { FC, useState, useRef, ChangeEvent } from "react";
+import React, { FC, useRef, ChangeEvent, useState } from "react";
 import axios from "axios";
 import UploadList from "./uploadList";
-
-import Button from "../Button";
+import Dragger from "./drag";
 
 export type UploadFileStatus = "ready" | "uploading" | "success" | "error";
-
 export interface UploadFile {
   uid: string;
   size: number;
@@ -16,8 +14,7 @@ export interface UploadFile {
   response?: any;
   error?: any;
 }
-
-export interface UploadPorps {
+export interface UploadProps {
   /**必选参数, 上传的地址 */
   action: string;
   /**上传的文件列表,*/
@@ -50,7 +47,15 @@ export interface UploadPorps {
   drag?: boolean;
 }
 
-export const Upload: FC<UploadPorps> = (props) => {
+/**
+ * 通过点击或者拖拽上传文件
+ * ### 引用方法
+ *
+ * ~~~js
+ * import { Upload } from 'vikingship'
+ * ~~~
+ */
+export const Upload: FC<UploadProps> = (props) => {
   const {
     action,
     defaultFileList,
@@ -60,10 +65,17 @@ export const Upload: FC<UploadPorps> = (props) => {
     onError,
     onChange,
     onRemove,
+    name,
+    headers,
+    data,
+    withCredentials,
+    accept,
+    multiple,
+    children,
+    drag,
   } = props;
   const fileInput = useRef<HTMLInputElement>(null);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-
+  const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || []);
   const updateFileList = (
     updateFile: UploadFile,
     updateObj: Partial<UploadFile>
@@ -78,33 +90,48 @@ export const Upload: FC<UploadPorps> = (props) => {
       });
     });
   };
-
   const handleClick = () => {
-    if (fileInput.current) fileInput.current.click();
+    if (fileInput.current) {
+      fileInput.current.click();
+    }
   };
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (!files) return;
-    upLoadFiles(files);
-    if (fileInput.current) fileInput.current.value = "";
+    if (!files) {
+      return;
+    }
+    uploadFiles(files);
+    if (fileInput.current) {
+      fileInput.current.value = "";
+    }
   };
-  const upLoadFiles = (files: FileList) => {
+  const handleRemove = (file: UploadFile) => {
+    setFileList((prevList) => {
+      return prevList.filter((item) => item.uid !== file.uid);
+    });
+    if (onRemove) {
+      onRemove(file);
+    }
+  };
+  const uploadFiles = (files: FileList) => {
     let postFiles = Array.from(files);
     postFiles.forEach((file) => {
-      if (!beforeUpload) post(file);
-      else {
+      if (!beforeUpload) {
+        post(file);
+      } else {
         const result = beforeUpload(file);
         if (result && result instanceof Promise) {
           result.then((processedFile) => {
             post(processedFile);
           });
-        } else if (result) {
+        } else if (result !== false) {
           post(file);
         }
       }
     });
   };
   const post = (file: File) => {
+    console.log(file);
     let _file: UploadFile = {
       uid: Date.now() + "upload-file",
       status: "ready",
@@ -113,50 +140,94 @@ export const Upload: FC<UploadPorps> = (props) => {
       percent: 0,
       raw: file,
     };
-    setFileList([_file, ...fileList]);
+    setFileList((prevList) => {
+      return [_file, ...prevList];
+    });
     const formData = new FormData();
-    formData.append(file.name, file);
+    formData.append(name || "file", file);
+    if (data) {
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
+    }
     axios
       .post(action, formData, {
         headers: {
+          ...headers,
           "Content-Type": "multipart/form-data",
         },
+        withCredentials,
         onUploadProgress: (e) => {
           let percentage = Math.round((e.loaded * 100) / e.total) || 0;
           if (percentage < 100) {
             updateFileList(_file, { percent: percentage, status: "uploading" });
-            onProgress ? onProgress(percentage, _file) : null;
+            _file.status = "uploading";
+            _file.percent = percentage;
+            if (onProgress) {
+              onProgress(percentage, _file);
+            }
           }
         },
       })
       .then((resp) => {
-        console.log(resp);
         updateFileList(_file, { status: "success", response: resp.data });
-        onSuccess ? onSuccess(resp.data, _file) : null;
-        onChange ? onChange(_file) : null;
+        _file.status = "success";
+        _file.response = resp.data;
+        if (onSuccess) {
+          onSuccess(resp.data, _file);
+        }
+        if (onChange) {
+          onChange(_file);
+        }
       })
       .catch((err) => {
-        console.error(err);
         updateFileList(_file, { status: "error", error: err });
-        onError ? onError(err, _file) : null;
-        onChange ? onChange(_file) : null;
+        _file.status = "error";
+        _file.error = err;
+        if (onError) {
+          onError(err, _file);
+        }
+        if (onChange) {
+          onChange(_file);
+        }
       });
   };
 
   return (
     <div className="godlike-upload-component">
-      <Button btnType="primary" onClick={handleClick}>
-        Upload File
-      </Button>
-      <input
-        className="godlike-file-input"
-        style={{ display: "none" }}
-        ref={fileInput}
-        onChange={handleFileChange}
-        type="file"
-      />
+      <div
+        className="godlike-upload-input"
+        style={{ display: "inline-block" }}
+        onClick={handleClick}
+      >
+        {drag ? (
+          <Dragger
+            onFile={(files: FileList) => {
+              uploadFiles(files);
+            }}
+          >
+            {children}
+          </Dragger>
+        ) : (
+          children
+        )}
+        <input
+          className="viking-file-input"
+          style={{ display: "none" }}
+          ref={fileInput}
+          onChange={handleFileChange}
+          type="file"
+          accept={accept}
+          multiple={multiple}
+        />
+      </div>
+
+      <UploadList fileList={fileList} onRemove={handleRemove} />
     </div>
   );
 };
 
+Upload.defaultProps = {
+  name: "file",
+};
 export default Upload;

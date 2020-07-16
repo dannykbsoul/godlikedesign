@@ -16,12 +16,12 @@ export const UploadList: FC<UploadListProps> = (props) => {
       {fileList.map((item) => {
         return (
           <li className="godlike-upload-list-item" key={item.uid}>
-            //需要根据status对颜色进行区分
+            {/* 需要根据status对颜色进行区分 */}
             <span className={`file-name file-name-${item.status}`}>
               <Icon icon="file-alt" theme="secondary" />
               {item.name}
             </span>
-            //右侧三种不同的图标
+            {/* 右侧三种不同的图标 */}
             <span className="file-status">
               {(item.status === "uploading" || item.status === "ready") && (
                 <Icon icon="spinner" spin theme="primary" />
