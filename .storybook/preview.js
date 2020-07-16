@@ -44,7 +44,7 @@ const loaderFn = () => {
     require("../src/components/Icon/icon.stories.tsx"),
     require("../src/components/Input/input.stories.tsx"),
     require("../src/components/AutoComplete/autoComplete.stories.tsx"),
-    // require("../src/components/Select/select.stories.tsx"),
+    require("../src/components/Select/select.stories.tsx"),
     // require("../src/components/Upload/upload.stories.tsx"),
   ];
 };
