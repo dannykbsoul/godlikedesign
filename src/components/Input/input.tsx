@@ -1,8 +1,8 @@
 import React, {
+  FC,
   ReactElement,
   InputHTMLAttributes,
   ChangeEvent,
-  forwardRef,
 } from "react";
 import classNames from "classnames";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -36,7 +36,7 @@ export interface InputProps
  *
  * 支持 HTMLInput 的所有基本属性
  */
-export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+export const Input: FC<InputProps> = (props) => {
   const { disabled, size, icon, prepend, append, style, ...restProps } = props;
   const cnames = classNames("godlike-input-wrapper", {
     [`input-size-${size}`]: size,
@@ -46,6 +46,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     "input-group-prepend": !!prepend,
   });
 
+  //处理value初始值的问题，防止非受控组件变成受控组件的错误发生
   const fixControlledValue = (value: any) => {
     if (typeof value === "undefined" || value === null) {
       return "";
@@ -53,6 +54,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     return value;
   };
 
+  //避免value和defaultValue同时出现的错误
   if ("value" in props) {
     delete restProps.defaultValue;
     restProps.value = fixControlledValue(props.value);
@@ -67,7 +69,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         </div>
       )}
       <input
-        ref={ref}
         className="godlike-input-inner"
         disabled={disabled}
         {...restProps}
@@ -75,6 +76,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       {append && <div className="godlike-input-group-append">{append}</div>}
     </div>
   );
-});
+};
 
 export default Input;

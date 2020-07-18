@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { Input } from "./input";
+
+const ControlledInput = () => {
+  const [value, setValue] = useState("");
+  return (
+    <Input value={value} onChange={(e) => setValue(e.target.value)}></Input>
+  );
+};
+
 const defaultInput = () => (
   <Input placeholder="漂亮的 Input" onChange={action("changed")} />
 );
