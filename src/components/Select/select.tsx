@@ -5,13 +5,13 @@ import React, {
   useRef,
   FunctionComponentElement,
   useEffect,
-} from "react";
-import classNames from "classnames";
-import Input from "../Input";
-import Icon from "../Icon";
-import useClickOutside from "../../hooks/useClickOutside";
-import Transition from "../Transition/transition";
-import { SelectOptionProps } from "./option";
+} from 'react';
+import classNames from 'classnames';
+import Input from '../Input';
+import Icon from '../Icon';
+import useClickOutside from '../../hooks/useClickOutside';
+import Transition from '../Transition/transition';
+import { SelectOptionProps } from './option';
 
 export interface SelectProps {
   /**指定默认选中的条目	 可以是是字符串或者字符串数组*/
@@ -68,7 +68,7 @@ export const Select: FC<SelectProps> = (props) => {
   );
   const [menuOpen, setOpen] = useState(false);
   const [value, setValue] = useState(
-    typeof defaultValue === "string" ? defaultValue : ""
+    typeof defaultValue === 'string' ? defaultValue : ''
   );
   const handleOptionClick = (value: string, isSelected?: boolean) => {
     // update value
@@ -79,7 +79,7 @@ export const Select: FC<SelectProps> = (props) => {
         onVisibleChange(false);
       }
     } else {
-      setValue("");
+      setValue('');
     }
     let updatedValues = [value];
     // click again to remove selected when is multiple mode
@@ -98,7 +98,7 @@ export const Select: FC<SelectProps> = (props) => {
     if (input.current) {
       input.current.focus();
       if (multiple && selectedValues.length > 0) {
-        input.current.placeholder = "";
+        input.current.placeholder = '';
       } else {
         if (placeholder) input.current.placeholder = placeholder;
       }
@@ -132,21 +132,21 @@ export const Select: FC<SelectProps> = (props) => {
   const generateOptions = () => {
     return React.Children.map(children, (child, i) => {
       const childElement = child as FunctionComponentElement<SelectOptionProps>;
-      if (childElement.type.displayName === "Option") {
+      if (childElement.type.displayName === 'Option') {
         return React.cloneElement(childElement, {
           index: `select-${i}`,
         });
       } else {
         console.error(
-          "Warning: Select has a child which is not a Option component"
+          'Warning: Select has a child which is not a Option component'
         );
       }
     });
   };
-  const containerClass = classNames("godlike-select", {
-    "menu-is-open": menuOpen,
-    "is-disabled": disabled,
-    "is-multiple": multiple,
+  const containerClass = classNames('godlike-select', {
+    'menu-is-open': menuOpen,
+    'is-disabled': disabled,
+    'is-multiple': multiple,
   });
   return (
     <div className={containerClass} ref={containerRef}>
@@ -190,7 +190,7 @@ export const Select: FC<SelectProps> = (props) => {
   );
 };
 Select.defaultProps = {
-  name: "godlike-select",
-  placeholder: "请选择",
+  name: 'godlike-select',
+  placeholder: '请选择',
 };
 export default Select;

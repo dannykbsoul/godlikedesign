@@ -6,13 +6,13 @@ import React, {
   ReactElement,
   useEffect,
   useRef,
-} from "react";
-import classNames from "classnames";
-import Input, { InputProps } from "../Input/input";
-import Icon from "../Icon/icon";
-import Transition from "../Transition/transition";
-import useDebounce from "../../hooks/useDebounce";
-import useClickOutside from "../../hooks/useClickOutside";
+} from 'react';
+import classNames from 'classnames';
+import Input, { InputProps } from '../Input/input';
+import Icon from '../Icon/icon';
+import Transition from '../Transition/transition';
+import useDebounce from '../../hooks/useDebounce';
+import useClickOutside from '../../hooks/useClickOutside';
 
 interface DataSourceObject {
   value: string;
@@ -20,7 +20,7 @@ interface DataSourceObject {
 
 export type DataSourceType<T = {}> = T & DataSourceObject;
 
-export interface AutoCompleteProps extends Omit<InputProps, "onSelect"> {
+export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
   /**
    * 返回输入建议的方法，可以拿到当前的输入，然后返回同步的数组或者是异步的Promise
    * type DataSourceType<T = {}> = T & DataSourceObject
@@ -156,8 +156,8 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
             </div>
           )}
           {suggestions.map((item, index) => {
-            const cnames = classNames("suggestion-item", {
-              "is-active": index === highlightIndex,
+            const cnames = classNames('suggestion-item', {
+              'is-active': index === highlightIndex,
             });
             return (
               <li

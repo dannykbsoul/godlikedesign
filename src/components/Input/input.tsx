@@ -3,16 +3,17 @@ import React, {
   ReactElement,
   InputHTMLAttributes,
   ChangeEvent,
-} from "react";
-import classNames from "classnames";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import Icon from "../Icon/icon";
+  forwardRef,
+} from 'react';
+import classNames from 'classnames';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import Icon from '../Icon/icon';
 
-type InputSize = "lg" | "sm";
+type InputSize = 'lg' | 'sm';
 
 //Omit 忽略值
 export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLElement>, "size"> {
+  extends Omit<InputHTMLAttributes<HTMLElement>, 'size'> {
   /**是否禁用 Input */
   disabled?: boolean;
   /**设置 input 大小，支持 lg 或者是 sm */
@@ -36,26 +37,26 @@ export interface InputProps
  *
  * 支持 HTMLInput 的所有基本属性
  */
-export const Input: FC<InputProps> = (props) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { disabled, size, icon, prepend, append, style, ...restProps } = props;
-  const cnames = classNames("godlike-input-wrapper", {
+  const cnames = classNames('godlike-input-wrapper', {
     [`input-size-${size}`]: size,
-    "is-disabled": disabled,
-    "input-group": prepend || append,
-    "input-group-append": !!append,
-    "input-group-prepend": !!prepend,
+    'is-disabled': disabled,
+    'input-group': prepend || append,
+    'input-group-append': !!append,
+    'input-group-prepend': !!prepend,
   });
 
   //处理value初始值的问题，防止非受控组件变成受控组件的错误发生
   const fixControlledValue = (value: any) => {
-    if (typeof value === "undefined" || value === null) {
-      return "";
+    if (typeof value === 'undefined' || value === null) {
+      return '';
     }
     return value;
   };
 
   //避免value和defaultValue同时出现的错误
-  if ("value" in props) {
+  if ('value' in props) {
     delete restProps.defaultValue;
     restProps.value = fixControlledValue(props.value);
   }
@@ -69,6 +70,7 @@ export const Input: FC<InputProps> = (props) => {
         </div>
       )}
       <input
+        ref={ref}
         className="godlike-input-inner"
         disabled={disabled}
         {...restProps}
@@ -76,6 +78,6 @@ export const Input: FC<InputProps> = (props) => {
       {append && <div className="godlike-input-group-append">{append}</div>}
     </div>
   );
-};
+});
 
 export default Input;
