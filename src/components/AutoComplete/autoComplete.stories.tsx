@@ -143,6 +143,11 @@ const ajaxComplete = () => {
     const itemWithGithub = item as DataSourceType<GithubUserProps>;
     return (
       <>
+        <img
+          src={itemWithGithub.avatar_url}
+          style={{ width: "auto", height: "24px" }}
+          alt=""
+        />
         <b>Name: {itemWithGithub.value}</b>
         <span>url: {itemWithGithub.url}</span>
       </>
