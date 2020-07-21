@@ -30,6 +30,7 @@ export interface SelectProps {
   onVisibleChange?: (visible: boolean) => void;
 }
 
+//需要一个context用来传递给子组件
 export interface ISelectContext {
   onSelect?: (value: string, isSelected?: boolean) => void;
   selectedValues: string[];
@@ -60,18 +61,25 @@ export const Select: FC<SelectProps> = (props) => {
     onChange,
     onVisibleChange,
   } = props;
+
+  //获取到input框dom的引用
   const input = useRef<HTMLInputElement>(null);
+  //获取到整个容器dom的引用，主要是为了后续的useClickOutside hooks的使用
   const containerRef = useRef<HTMLInputElement>(null);
   const containerWidth = useRef(0);
+  //当mode为多选的时候选中条目的state
   const [selectedValues, setSelectedValues] = useState<string[]>(
     Array.isArray(defaultValue) ? defaultValue : []
   );
+  //需要一个state来管理下拉框的开合
   const [menuOpen, setOpen] = useState(false);
+  //当mode为单选时候的state
   const [value, setValue] = useState(
     typeof defaultValue === "string" ? defaultValue : ""
   );
+  //这个方法服务于点击下拉条目实现增加删除
   const handleOptionClick = (value: string, isSelected?: boolean) => {
-    // update value
+    //单选的时候 需要将下拉框收起，并且设置input框的value值
     if (!multiple) {
       setOpen(false);
       setValue(value);
@@ -79,10 +87,11 @@ export const Select: FC<SelectProps> = (props) => {
         onVisibleChange(false);
       }
     } else {
+      //多选的话先将input框值置空
       setValue("");
     }
     let updatedValues = [value];
-    // click again to remove selected when is multiple mode
+    //多选模式下，要判断原先状态是否选中状态
     if (multiple) {
       updatedValues = isSelected
         ? selectedValues.filter((v) => v !== value)
@@ -93,8 +102,10 @@ export const Select: FC<SelectProps> = (props) => {
       onChange(value, updatedValues);
     }
   };
+
+  //selectedValues, multiple, placeholder发生变化的时候执行
+  //如果多选情况下有selectedValues，则placeholder需要置空，否则有placeholder需要填上placeholder
   useEffect(() => {
-    // focus input
     if (input.current) {
       input.current.focus();
       if (multiple && selectedValues.length > 0) {
@@ -104,11 +115,14 @@ export const Select: FC<SelectProps> = (props) => {
       }
     }
   }, [selectedValues, multiple, placeholder]);
+
   useEffect(() => {
     if (containerRef.current) {
       containerWidth.current = containerRef.current.getBoundingClientRect().width;
     }
   });
+
+  //点击container区域外的时候，需要将下拉框收起
   useClickOutside(containerRef, () => {
     setOpen(false);
     if (onVisibleChange && menuOpen) {
@@ -129,6 +143,8 @@ export const Select: FC<SelectProps> = (props) => {
       }
     }
   };
+
+  //下拉框内容
   const generateOptions = () => {
     return React.Children.map(children, (child, i) => {
       const childElement = child as FunctionComponentElement<SelectOptionProps>;
