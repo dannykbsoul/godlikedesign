@@ -3,13 +3,13 @@ import React, {
   useState,
   createContext,
   FunctionComponentElement,
-} from 'react';
-import classNames from 'classnames';
-import MenuItem, { MenuItemProps } from './menuItem';
-import SubMenuItem from './subMenu';
+} from "react";
+import classNames from "classnames";
+import MenuItem, { MenuItemProps } from "./menuItem";
+import SubMenuItem from "./subMenu";
 
 //横向与纵向menu
-type MenuMode = 'horizontal' | 'vertical';
+type MenuMode = "horizontal" | "vertical";
 
 //点击menu触发的callback
 type SelectCallback = (selectedIndex: string) => void;
@@ -20,6 +20,7 @@ export interface MenuProps {
   className?: string;
   /** menu类型 横向或纵向 */
   mode?: MenuMode;
+  /** 支持自定义style */
   style?: React.CSSProperties;
   /** 点击menu触发的callback */
   onSelect?: SelectCallback;
@@ -34,7 +35,7 @@ interface IMenuContext {
   defaultOpenSubMenus?: string[];
 }
 
-export const MenuContext = createContext<IMenuContext>({ index: '0' });
+export const MenuContext = createContext<IMenuContext>({ index: "0" });
 
 export const Menu: FC<MenuProps> = (props) => {
   const {
@@ -50,9 +51,9 @@ export const Menu: FC<MenuProps> = (props) => {
   //设置当前高亮index的state
   const [currentActive, setActive] = useState(defaultIndex);
 
-  const classes = classNames('godlike-menu', className, {
-    'menu-vertical': mode === 'vertical',
-    'menu-horizontal': mode !== 'vertical',
+  const classes = classNames("godlike-menu", className, {
+    "menu-vertical": mode === "vertical",
+    "menu-horizontal": mode !== "vertical",
   });
 
   const handleClick = (index: string) => {
@@ -62,7 +63,7 @@ export const Menu: FC<MenuProps> = (props) => {
 
   //传递给子组件的context
   const passedContext: IMenuContext = {
-    index: currentActive ? currentActive : '0',
+    index: currentActive ? currentActive : "0",
     onSelect: handleClick,
     mode,
     defaultOpenSubMenus,
@@ -78,13 +79,14 @@ export const Menu: FC<MenuProps> = (props) => {
         displayName === MenuItem.displayName ||
         displayName === SubMenuItem.displayName
       ) {
-        //需要给子组件自动添加index，如果用户没有传入index的话
+        //需要给子组件自动添加index，如果用户没有指定index的话
+        console.log(childElement);
         return React.cloneElement(childElement, {
-          index: index.toString(),
+          index: childElement.props.index || index.toString(),
         });
       } else {
         console.error(
-          'Warning: Menu has a child which is not a MenuItem component'
+          "Warning: Menu has a child which is not a MenuItem component"
         );
       }
     });
@@ -100,8 +102,8 @@ export const Menu: FC<MenuProps> = (props) => {
 };
 
 Menu.defaultProps = {
-  defaultIndex: '0',
-  mode: 'horizontal',
+  defaultIndex: "0",
+  mode: "horizontal",
   defaultOpenSubMenus: [],
 };
 
