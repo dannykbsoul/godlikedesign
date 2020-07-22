@@ -4,16 +4,22 @@ import UploadList from "./uploadList";
 import Dragger from "./drag";
 
 export type UploadFileStatus = "ready" | "uploading" | "success" | "error";
+
+//文件类型的接口定义
 export interface UploadFile {
+  /** 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突 */
   uid: string;
   size: number;
+  /** 文件名 */
   name: string;
   status?: UploadFileStatus;
   percent: number;
   raw?: File;
+  /** 服务端响应内容 */
   response?: any;
   error?: any;
 }
+
 export interface UploadProps {
   /**必选参数, 上传的地址 */
   action: string;
@@ -52,7 +58,7 @@ export interface UploadProps {
  * ### 引用方法
  *
  * ~~~js
- * import { Upload } from 'vikingship'
+ * import { Upload } from 'godlikedesign'
  * ~~~
  */
 export const Upload: FC<UploadProps> = (props) => {
