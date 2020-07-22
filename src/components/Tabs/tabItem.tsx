@@ -11,4 +11,6 @@ export const TabItem: FC<TabItemProps> = ({ children }) => {
   return <div className="godlike-tab-panel">{children}</div>;
 };
 
+TabItem.displayName = "TabItem";
+
 export default TabItem;
