@@ -34,7 +34,7 @@ const checkUpload = () => {
       beforeUpload={checkFileSize}
     >
       <Button size="lg" btnType="primary">
-        <Icon icon="upload" /> 不能传大于50Kb！{" "}
+        <Icon icon="upload" /> 不能传大于50Kb
       </Button>
     </Upload>
   );

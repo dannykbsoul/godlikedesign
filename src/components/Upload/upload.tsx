@@ -15,7 +15,6 @@ export interface UploadFile {
   status?: UploadFileStatus;
   percent: number;
   raw?: File;
-  /** 服务端响应内容 */
   response?: any;
   error?: any;
 }
@@ -80,8 +79,12 @@ export const Upload: FC<UploadProps> = (props) => {
     children,
     drag,
   } = props;
+
+  //获取input dom的引用
   const fileInput = useRef<HTMLInputElement>(null);
+  //展示fileList文件
   const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || []);
+  //更新文件列表
   const updateFileList = (
     updateFile: UploadFile,
     updateObj: Partial<UploadFile>
@@ -96,6 +99,8 @@ export const Upload: FC<UploadProps> = (props) => {
       });
     });
   };
+
+  //通过触发div的点击从而间接来触发input的点击事件，从而实现文件的上传
   const handleClick = () => {
     if (fileInput.current) {
       fileInput.current.click();
@@ -111,6 +116,8 @@ export const Upload: FC<UploadProps> = (props) => {
       fileInput.current.value = "";
     }
   };
+
+  //删除file
   const handleRemove = (file: UploadFile) => {
     setFileList((prevList) => {
       return prevList.filter((item) => item.uid !== file.uid);
@@ -119,6 +126,8 @@ export const Upload: FC<UploadProps> = (props) => {
       onRemove(file);
     }
   };
+
+  //提交file
   const uploadFiles = (files: FileList) => {
     let postFiles = Array.from(files);
     postFiles.forEach((file) => {
@@ -218,7 +227,7 @@ export const Upload: FC<UploadProps> = (props) => {
           children
         )}
         <input
-          className="viking-file-input"
+          className="godlike-file-input"
           style={{ display: "none" }}
           ref={fileInput}
           onChange={handleFileChange}
