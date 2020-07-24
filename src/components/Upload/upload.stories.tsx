@@ -12,6 +12,7 @@ const simpleUpload = () => (
     onSuccess={action("success")}
     onProgress={action("progress")}
     onRemove={action("removed")}
+    multiple
   >
     <Button size="lg" btnType="primary">
       <Icon icon="upload" /> 点击上传{" "}

@@ -127,13 +127,17 @@ export const Upload: FC<UploadProps> = (props) => {
     }
   };
 
-  //提交file
+  //使用type属性为file的input元素，都有一个files属性，files 是一个 FileList 对象(类似于NodeList对象)
+  //你可以通过这个对象访问到用户所选择的文件，是一个数组
   const uploadFiles = (files: FileList) => {
+    //类数组转换为数组
     let postFiles = Array.from(files);
     postFiles.forEach((file) => {
+      //根据是否有beforeUpload来判断
       if (!beforeUpload) {
         post(file);
       } else {
+        //beforeUpload一般是用来做上传的最后检验，如果是false说明不符合条件
         const result = beforeUpload(file);
         if (result && result instanceof Promise) {
           result.then((processedFile) => {
@@ -146,7 +150,7 @@ export const Upload: FC<UploadProps> = (props) => {
     });
   };
   const post = (file: File) => {
-    console.log(file);
+    //需要对原生的file类型进行包装
     let _file: UploadFile = {
       uid: Date.now() + "upload-file",
       status: "ready",

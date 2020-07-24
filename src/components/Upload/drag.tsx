@@ -11,6 +11,7 @@ export const Dragger: FC<DraggerProps> = (props) => {
   const klass = classNames("godlike-uploader-dragger", {
     "is-dragover": dragOver,
   });
+
   const handleDrop = (e: DragEvent<HTMLElement>) => {
     e.preventDefault();
     setDragOver(false);
@@ -20,6 +21,10 @@ export const Dragger: FC<DraggerProps> = (props) => {
     e.preventDefault();
     setDragOver(over);
   };
+
+  //dragOver 拖拉进入div区域
+  //dragDown 拖拉离开div区域
+  //Drop 丢进div区域
   return (
     <div
       className={klass}
