@@ -3,16 +3,13 @@ import { storiesOf } from '@storybook/react';
 
 const markdownText = `
 ### 使用 React+typescript 实现属于自己的组件库
-
+>
 ### 安装试试
-
 ~~~javascript
 npm install godlikedesign --save
 ~~~
-
-
+>
 ### 使用
-
 ~~~javascript
 // 加载样式
 import 'godlikedesign/dist/index.css'
