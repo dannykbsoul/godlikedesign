@@ -1,6 +1,6 @@
 {
   "name": "godlikedesign",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "React components library",
   "author": "dannykbsoul",
   "private": false,
@@ -44,7 +44,7 @@
     "build-css": "node-sass ./src/styles/index.scss ./dist/index.css",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build-ts && npm run build-css && npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
