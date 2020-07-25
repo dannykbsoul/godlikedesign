@@ -1,5 +1,5 @@
-import React from "react";
-import { storiesOf } from "@storybook/react";
+import React from 'react';
+import { storiesOf } from '@storybook/react';
 
 const markdownText = `
 ### 使用 React+typescript 实现属于自己的组件库
@@ -15,15 +15,15 @@ npm install godlikedesign --save
 
 ~~~javascript
 // 加载样式
-import 'vikingship/dist/index.css'
+import 'godlikedesign/dist/index.css'
 // 引入组件
 import { Button } from 'godlikedesign'
 ~~~
 `;
-storiesOf("欢迎来到godlikedesign", module).add(
-  "welcome",
+storiesOf('欢迎来到godlikedesign', module).add(
+  'welcome',
   () => {
-    return <h2>欢迎来到 vikingship 组件库</h2>;
+    return <h2>欢迎来到 godlikedesign 组件库</h2>;
   },
   { info: { text: markdownText, source: false } }
 );
