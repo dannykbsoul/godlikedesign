@@ -1,6 +1,6 @@
 {
   "name": "godlikedesign",
-  "version": "0.1.9",
+  "version": "1.0.1",
   "description": "React components library",
   "author": "dannykbsoul",
   "private": false,
@@ -8,6 +8,7 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
+  "sideEffects": false,
   "keywords": [
     "Component",
     "UI",
